@@ -146,6 +146,33 @@ section .about, section .contact {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Galería */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.gallery img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 5px;
+}
+
+/* Animaciones */
+.fade-in {
+    animation: fadeIn 2s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     header nav {
