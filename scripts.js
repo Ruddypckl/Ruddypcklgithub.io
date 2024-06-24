@@ -1,17 +1,17 @@
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
-import app from "./firebaseConfig.js"; // Asegúrate de que la ruta sea correcta
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import app from "./firebaseConfig.js"; // Ajusta la ruta si es necesario
 
 const db = getFirestore(app);
 
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector("form");
+document.addEventListener("DOMContentLoaded", function() {    const form = document.querySelector("#contact-form");
     form.addEventListener("submit", function(event) {
         event.preventDefault();
         alert("Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.");
         form.reset();
     });
 
-    document.getElementById('contact-form').addEventListener('submit', async function(event) {
+    form.addEventListener('submit', async function(event) {
         event.preventDefault();
 
         const name = document.getElementById('name').value;
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
         try {
             await addDoc(collection(db, "contacts"), data);
             alert('Formulario enviado');
-            document.getElementById('contact-form').reset();
+            form.reset();
         } catch (error) {
             console.error("Error adding document: ", error);
             alert('Hubo un error al enviar el formulario');
