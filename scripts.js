@@ -1,25 +1,9 @@
-// scripts.js
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+import app from "./firebaseConfig.js"; // Asegúrate de que la ruta sea correcta
 
-// Configuración de Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyAq4RIddDlri2JUgLa5XLrL-0A1T_Bg-dE",
-  authDomain: "ruddypckl-d939f.firebaseapp.com",
-  projectId: "ruddypckl-d939f",
-  storageBucket: "ruddypckl-d939f.appspot.com",
-  messagingSenderId: "384269323168",
-  appId: "1:384269323168:web:9d542423f4e2bc659b72c5",
-  measurementId: "G-DR69RMZZXE"
-};
-
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Manejar el envío del formulario de contacto
     const form = document.querySelector("form");
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -72,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// Función para inicializar el mapa de Google
 function initMap() {
     var location = { lat: -25.344, lng: 131.036 };
     var map = new google.maps.Map(document.getElementById('map'), {
