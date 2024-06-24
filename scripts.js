@@ -1,5 +1,23 @@
 // scripts.js
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyAq4RIddDlri2JUgLa5XLrL-0A1T_Bg-dE",
+  authDomain: "ruddypckl-d939f.firebaseapp.com",
+  projectId: "ruddypckl-d939f",
+  storageBucket: "ruddypckl-d939f.appspot.com",
+  messagingSenderId: "384269323168",
+  appId: "1:384269323168:web:9d542423f4e2bc659b72c5",
+  measurementId: "G-DR69RMZZXE"
+};
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 document.addEventListener("DOMContentLoaded", function() {
     // Manejar el envío del formulario de contacto
     const form = document.querySelector("form");
@@ -9,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
         form.reset();
     });
 
-    document.getElementById('contact-form').addEventListener('submit', function(event) {
+    document.getElementById('contact-form').addEventListener('submit', async function(event) {
         event.preventDefault();
 
         const name = document.getElementById('name').value;
@@ -19,15 +37,18 @@ document.addEventListener("DOMContentLoaded", function() {
         const data = {
             name: name,
             email: email,
-            message: message
+            message: message,
+            timestamp: serverTimestamp()
         };
 
-        // Aquí puedes usar fetch o AJAX para enviar los datos a un servicio backend
-        console.log(data);
-        alert('Formulario enviado');
-
-        // Para limpiar el formulario
-        document.getElementById('contact-form').reset();
+        try {
+            await addDoc(collection(db, "contacts"), data);
+            alert('Formulario enviado');
+            document.getElementById('contact-form').reset();
+        } catch (error) {
+            console.error("Error adding document: ", error);
+            alert('Hubo un error al enviar el formulario');
+        }
     });
 
     // Cargar el contenido del blog desde un archivo Markdown
@@ -38,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
     // Inicializar la galería de imágenes con Lightbox (opcional)
-    if (lightbox) {
+    if (typeof lightbox !== "undefined") {
         lightbox.option({
             'resizeDuration': 200,
             'wrapAround': true
