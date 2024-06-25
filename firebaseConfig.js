@@ -1,8 +1,8 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// Importa las funciones que necesitas de los SDKs que necesitas
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 
-// Your web app's Firebase configuration
+// Tu configuración de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAq4RIddDlri2JUgLa5XLrL-0A1T_Bg-dE",
   authDomain: "ruddypckl-d939f.firebaseapp.com",
@@ -13,8 +13,8 @@ const firebaseConfig = {
   measurementId: "G-DR69RMZZXE"
 };
 
-// Initialize Firebase
+// Inicializa Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
-export default app; // Exporta la instancia de la aplicación Firebase para ser utilizada en otros archivos
+export { db };

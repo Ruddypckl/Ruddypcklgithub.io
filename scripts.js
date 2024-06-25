@@ -1,22 +1,16 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
-import app from "./firebaseConfig.js"; // Ajusta la ruta si es necesario
+import { db } from "./firebaseConfig.js"; 
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 
-const db = getFirestore(app);
-
-document.addEventListener("DOMContentLoaded", function() {    const form = document.querySelector("#contact-form");
-    form.addEventListener("submit", function(event) {
-        event.preventDefault();
-        alert("Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.");
-        form.reset();
-    });
-
-    form.addEventListener('submit', async function(event) {
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('contact-form').addEventListener('submit', async function(event) {
         event.preventDefault();
 
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const message = document.getElementById('message').value;
+
+        // Verifica que los datos se capturan correctamente
+        console.log("Datos capturados:", { name, email, message });
 
         const data = {
             name: name,
@@ -28,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {    const form = docum
         try {
             await addDoc(collection(db, "contacts"), data);
             alert('Formulario enviado');
-            form.reset();
+            document.getElementById('contact-form').reset();
         } catch (error) {
             console.error("Error adding document: ", error);
             alert('Hubo un error al enviar el formulario');
@@ -56,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {    const form = docum
     }
 });
 
+// Función para inicializar el mapa de Google
 function initMap() {
     var location = { lat: -25.344, lng: 131.036 };
     var map = new google.maps.Map(document.getElementById('map'), {
