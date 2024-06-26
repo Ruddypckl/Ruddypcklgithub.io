@@ -28,6 +28,18 @@ body {
     flex: 1;
 }
 
+/* Asegura que el contenedor principal ocupe todo el espacio disponible */
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Asegura que el contenido principal crezca y ocupe el espacio disponible */
+.content-wrapper .container {
+    flex: 1;
+}
+
 /* Cabecera */
 header {
     background: #333;
