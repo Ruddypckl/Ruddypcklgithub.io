@@ -1,6 +1,6 @@
 import { db } from "./firebaseConfig.js"; 
 import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", function() {
     const auth = getAuth();
@@ -74,6 +74,44 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
         });
     }
+
+    // Manejo del estado de autenticación
+    onAuthStateChanged(auth, (user) => {
+        const nav = document.querySelector('nav ul');
+        if (user) {
+            // Usuario está autenticado
+            nav.innerHTML = `
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="bots.html">Bots/Aplicaciones</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="sobre.html">Sobre Nosotros</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="#" id="logout">Cerrar Sesión</a></li>
+            `;
+
+            document.getElementById('logout').addEventListener('click', function(event) {
+                event.preventDefault();
+                signOut(auth).then(() => {
+                    alert('Cierre de sesión exitoso');
+                    window.location.href = 'index.html';
+                }).catch((error) => {
+                    console.error("Error al cerrar sesión: ", error);
+                    alert('Error al cerrar sesión');
+                });
+            });
+        } else {
+            // Usuario no está autenticado
+            nav.innerHTML = `
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="bots.html">Bots/Aplicaciones</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="sobre.html">Sobre Nosotros</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="login.html">Iniciar Sesión</a></li>
+                <li><a href="register.html">Registrarse</a></li>
+            `;
+        }
+    });
 
     // Cargar el contenido del blog desde un archivo Markdown
     fetch('blog-post.md')

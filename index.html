@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Página principal de Mi Página de Bots">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Mi Página de Bots</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,15 +15,15 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="index.html">Inicio</a></li>
+                        <li class="current"><a href="index.html">Inicio</a></li>
                         <li><a href="bots.html">Bots/Aplicaciones</a></li>
                         <li><a href="contacto.html">Contacto</a></li>
                         <li><a href="sobre.html">Sobre Nosotros</a></li>
                         <li><a href="blog.html">Blog</a></li>
-                        <li><a href="login.html">Iniciar Sesión</a></li>
-                        <li><a href="register.html">Registrarse</a></li>
+                        <li id="login-nav-item"><a href="login.html">Iniciar Sesión</a></li>
+                        <li id="logout-nav-item" style="display:none;"><a href="#" id="logout-button">Cerrar Sesión</a></li>
                     </ul>
-                </nav>                
+                </nav>
             </div>
         </header>
         <section class="container">
