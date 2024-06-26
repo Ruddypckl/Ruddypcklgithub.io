@@ -6,31 +6,34 @@ document.addEventListener("DOMContentLoaded", function() {
     const auth = getAuth();
 
     // Manejo del formulario de contacto
-    document.getElementById('contact-form').addEventListener('submit', async function(event) {
-        event.preventDefault();
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
 
-        console.log("Datos capturados:", { name, email, message });
+            console.log("Datos capturados:", { name, email, message });
 
-        const data = {
-            name: name,
-            email: email,
-            message: message,
-            timestamp: serverTimestamp()
-        };
+            const data = {
+                name: name,
+                email: email,
+                message: message,
+                timestamp: serverTimestamp()
+            };
 
-        try {
-            await addDoc(collection(db, "contacts"), data);
-            alert('Formulario enviado');
-            document.getElementById('contact-form').reset();
-        } catch (error) {
-            console.error("Error adding document: ", error);
-            alert('Hubo un error al enviar el formulario');
-        }
-    });
+            try {
+                await addDoc(collection(db, "contacts"), data);
+                alert('Formulario enviado');
+                contactForm.reset();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert('Hubo un error al enviar el formulario');
+            }
+        });
+    }
 
     // Manejo del formulario de inicio de sesión
     const loginForm = document.getElementById('login-form');
