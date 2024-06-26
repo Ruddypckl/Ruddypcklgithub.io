@@ -1,6 +1,6 @@
-import { db } from "./firebaseConfig.js"; 
+import { db } from "./firebaseConfig.js";
 import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", function() {
     const auth = getAuth();
@@ -60,13 +60,21 @@ document.addEventListener("DOMContentLoaded", function() {
     if (registerForm) {
         registerForm.addEventListener('submit', function(event) {
             event.preventDefault();
+            const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
 
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    alert('Registro exitoso');
-                    window.location.href = 'login.html';
+                    updateProfile(auth.currentUser, {
+                        displayName: name
+                    }).then(() => {
+                        alert('Registro exitoso');
+                        window.location.href = 'login.html';
+                    }).catch((error) => {
+                        console.error("Error al actualizar el perfil: ", error);
+                        alert('Error al actualizar el perfil');
+                    });
                 })
                 .catch((error) => {
                     console.error("Error al registrarse: ", error);
@@ -86,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <li><a href="contacto.html">Contacto</a></li>
                 <li><a href="sobre.html">Sobre Nosotros</a></li>
                 <li><a href="blog.html">Blog</a></li>
+                <li id="user-name" class="username">Hola, ${user.displayName}</li>
                 <li><a href="#" id="logout">Cerrar Sesión</a></li>
             `;
 
