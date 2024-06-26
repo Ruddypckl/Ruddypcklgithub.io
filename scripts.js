@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         displayName: name
                     }).then(() => {
                         alert('Registro exitoso');
-                        window.location.href = 'login.html';
+                        window.location.href = 'index.html'; // Redirige a la página de inicio
                     }).catch((error) => {
                         console.error("Error al actualizar el perfil: ", error);
                         alert('Error al actualizar el perfil');
