@@ -1,7 +1,11 @@
 import { db } from "./firebaseConfig.js"; 
 import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", function() {
+    const auth = getAuth();
+
+    // Manejo del formulario de contacto
     document.getElementById('contact-form').addEventListener('submit', async function(event) {
         event.preventDefault();
 
@@ -9,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const email = document.getElementById('email').value;
         const message = document.getElementById('message').value;
 
-        // Verifica que los datos se capturan correctamente
         console.log("Datos capturados:", { name, email, message });
 
         const data = {
@@ -29,33 +32,50 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // Manejo del formulario de inicio de sesión
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert('Inicio de sesión exitoso');
+                    window.location.href = 'index.html';
+                })
+                .catch((error) => {
+                    console.error("Error al iniciar sesión: ", error);
+                    alert('Error al iniciar sesión');
+                });
+        });
+    }
+
+    // Manejo del formulario de registro
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert('Registro exitoso');
+                    window.location.href = 'login.html';
+                })
+                .catch((error) => {
+                    console.error("Error al registrarse: ", error);
+                    alert('Error al registrarse');
+                });
+        });
+    }
+
     // Cargar el contenido del blog desde un archivo Markdown
     fetch('blog-post.md')
         .then(response => response.text())
         .then(text => {
             document.getElementById('blog-container').innerHTML = marked(text);
         });
-
-    // Inicializar la galería de imágenes con Lightbox (opcional)
-    if (typeof lightbox !== "undefined") {
-        lightbox.option({
-            'resizeDuration': 200,
-            'wrapAround': true
-        });
-    }
-
-    // Inicializar el mapa de Google
-    if (typeof initMap === "function") {
-        initMap();
-    }
 });
-
-// Función para inicializar el mapa de Google
-function initMap() {
-    var location = { lat: -25.344, lng: 131.036 };
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: location
-    });
-    var marker = new google.maps.Marker({ position: location, map: map });
-}
