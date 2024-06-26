@@ -66,15 +66,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    updateProfile(auth.currentUser, {
+                    return updateProfile(auth.currentUser, {
                         displayName: name
-                    }).then(() => {
-                        alert('Registro exitoso');
-                        window.location.href = 'index.html'; // Redirige a la página de inicio
-                    }).catch((error) => {
-                        console.error("Error al actualizar el perfil: ", error);
-                        alert('Error al actualizar el perfil');
                     });
+                })
+                .then(() => {
+                    alert('Registro exitoso');
+                    // Redirige a la página de inicio después del registro exitoso
+                    window.location.href = 'index.html';
                 })
                 .catch((error) => {
                     console.error("Error al registrarse: ", error);

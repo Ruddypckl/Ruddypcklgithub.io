@@ -307,3 +307,21 @@ nav ul li a:hover {
         margin-bottom: 10px;
     }
 }
+/* Estilos para todos los títulos de funciones */
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* Color oscuro para los títulos */
+    margin-bottom: 10px; /* Espacio inferior para separación */
+}
+
+/* Estilo específico para los títulos de navegación */
+nav ul li a {
+    text-decoration: none;
+    color: #333; /* Color base para los enlaces */
+    font-size: 16px; /* Tamaño de fuente estándar */
+    font-weight: bold; /* Texto en negrita */
+    padding: 10px; /* Espacio interno en los enlaces */
+}
+
+nav ul li a:hover {
+    color: #555; /* Color al pasar el ratón sobre los enlaces */
+}
