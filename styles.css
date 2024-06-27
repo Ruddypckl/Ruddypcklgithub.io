@@ -42,7 +42,7 @@ body {
 
 /* Cabecera */
 header {
-    background: #333;
+    background: #af0606;
     color: #fff;
     padding-top: 30px;
     min-height: 70px;
@@ -91,7 +91,7 @@ header a:hover {
 
 /* Pie de página */
 footer {
-    background: #333;
+    background: #af0606;
     color: #fff;
     text-align: center;
     padding: 10px 0;
