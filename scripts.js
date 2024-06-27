@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     alert('Inicio de sesión exitoso');
-                    window.location.href = 'index.html';
+                    window.location.href = 'index.html'; // Redirige a la página de inicio
                 })
                 .catch((error) => {
                     console.error("Error al iniciar sesión: ", error);
@@ -66,14 +66,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    return updateProfile(auth.currentUser, {
+                    updateProfile(auth.currentUser, {
                         displayName: name
+                    }).then(() => {
+                        alert('Registro exitoso');
+                        window.location.href = 'index.html'; // Redirige a la página de inicio
+                    }).catch((error) => {
+                        console.error("Error al actualizar el perfil: ", error);
+                        alert('Error al actualizar el perfil');
                     });
-                })
-                .then(() => {
-                    alert('Registro exitoso');
-                    // Redirige a la página de inicio después del registro exitoso
-                    window.location.href = 'index.html';
                 })
                 .catch((error) => {
                     console.error("Error al registrarse: ", error);
@@ -101,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 event.preventDefault();
                 signOut(auth).then(() => {
                     alert('Cierre de sesión exitoso');
-                    window.location.href = 'index.html';
+                    window.location.href = 'index.html'; // Redirige a la página de inicio
                 }).catch((error) => {
                     console.error("Error al cerrar sesión: ", error);
                     alert('Error al cerrar sesión');
